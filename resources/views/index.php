@@ -16,8 +16,9 @@
         <header><h2>Task Manager</h2></header>
         <nav>
             <ul>
-                <li><a href="index.html">Feladatok</a></li>
-                <li><a href="felhasznalok.html">Felhasználók</a></li>
+                <li><a href="/">Feladatok</a></li>
+                <li><a href="user">Felhasználók</a></li>
+                <li><a href=<?php $route=route('logout'); echo $route;?>>Kijelentkezés</a></li>
             </ul>
         </nav>
         <aside>

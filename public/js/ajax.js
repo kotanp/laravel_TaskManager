@@ -21,15 +21,29 @@ class Ajax{
             url: apivegpont, 
             type: "POST", 
             data:ujAdat,
-            // success: function(result){
-            //     console.log("Sikerült!");
-            // },
             // error: function (data, textStatus, errorThrown) {
             //     console.log(data);
         
             // },
         });
-        }
+    }
+    
+    postRedirectAjax(apivegpont, ujAdat){
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': this.token},
+            url: apivegpont, 
+            type: "POST", 
+            data:ujAdat,
+            success: function(result){
+                //console.log(result.url);
+                location.assign(result.url);
+            },
+            // error: function (data, textStatus, errorThrown) {
+            //     console.log(data);
+            
+            // },
+        });
+    }
 
     deleteAjax(apivegpont, id){
         $.ajax({
@@ -37,7 +51,7 @@ class Ajax{
             url: apivegpont+"/"+id, 
             type: "DELETE",
         });
-        }
+    }
 
     putAjax(apivegpont, id, ujAdat){
         $.ajax({
@@ -46,5 +60,5 @@ class Ajax{
             type: "PUT",
             data:ujAdat,
         });
-        }
+    }
 }

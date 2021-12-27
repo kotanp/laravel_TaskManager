@@ -80,8 +80,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($userId)
     {
         //
+        $user=Task::find($userId);
+        $user->delete();
     }
 }

@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsUgyvezeto;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +20,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware(['auth'])->name('kezdolap');
 
 //Task routes
 Route::get('/api/tasks', [TaskController::class, 'index']);
@@ -30,5 +33,32 @@ Route::get('/api/tasks/expand={child}', [TaskController::class, 'expand']);
 Route::get('/api/task/search/{column}/{expression}/{value}', [TaskController::class, 'search']);
 
 //User routes
+// Route::get('/user', function () {
+//     return view('user');
+// });
 Route::get('/api/users', [UserController::class, 'index']);
 Route::get('/api/user/{id}', [UserController::class, 'show']);
+Route::delete('/api/user/{id}', [UserController::class, 'destroy']);
+
+//Login
+// Route::get('/login.php', function () {
+//     return view('login');
+// });
+
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/signin', [AuthController::class, 'authenticate'])->name('signin.custom');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/test', function () {
+        return 'Hello';
+    });
+});
+
+Route::middleware(['auth', IsUgyvezeto::class])->group(function () {
+    Route::get('/user', function () {
+        return view('user');
+    });
+});
+
+Route::get('/api/logins', [AuthController::class, 'all']);
