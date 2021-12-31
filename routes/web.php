@@ -62,3 +62,10 @@ Route::middleware(['auth', IsUgyvezeto::class])->group(function () {
 });
 
 Route::get('/api/logins', [AuthController::class, 'all']);
+
+##
+Route::get('/changepwd',function(){
+    return view('changepwd');
+});
+
+Route::post('/change', [AuthController::class, 'changePassword'])->name('password.change');

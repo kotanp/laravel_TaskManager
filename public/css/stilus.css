@@ -20,7 +20,7 @@ article{
 
 nav ul {
     display: grid;
-    grid-template-columns: 100px 100px auto 100px;
+    grid-template-columns: 100px 100px 140px 100px;
     grid-gap: 5px;
     padding: 0px;
 }

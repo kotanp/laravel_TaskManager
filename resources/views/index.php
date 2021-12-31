@@ -18,7 +18,8 @@
             <ul>
                 <li><a href="/">Feladatok</a></li>
                 <li><a href="user">Felhasználók</a></li>
-                <li><a href=<?php $route=route('logout'); echo $route;?>>Kijelentkezés</a></li>
+                <li><a href="changepwd">Jelszó változtatás</a></li>
+                <li><a href="logout">Kijelentkezés</a></li>
             </ul>
         </nav>
         <aside>

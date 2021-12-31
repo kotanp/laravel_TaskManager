@@ -11,14 +11,15 @@
     <title>Login</title>
 </head>
 <body>
-<form id="form" method="POST">
+<form id="form" method="POST" action=<?php $route=route('signin.custom'); echo $route?>>
                     <fieldset>
                     <legend>Bejelentkezés:</legend>
+                    <input type="hidden" name="_token" value=<?php $token=csrf_token(); echo $token;?>>
                     <label for="azon">Azonosító:</label><br>
                     <input type="text" id="azon" name="azon"><br>
-                    <label for="passw">Jelszó:</label><br>
-                    <input type="password" id="passw" name="passw">
-                    <input type="button" id="submit" value="Belépés">
+                    <label for="password">Jelszó:</label><br>
+                    <input type="password" id="password" name="password">
+                    <input type="submit" id="submit" value="Belépés">
                 </fieldset> 
                 </form>
 </body>
