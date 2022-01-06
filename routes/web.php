@@ -23,14 +23,17 @@ Route::get('/', function () {
 })->middleware(['auth'])->name('kezdolap');
 
 //Task routes
+Route::get('/api/task/search', [TaskController::class, 'search']);
+Route::get('/api/task/sort', [TaskController::class, 'sortBy']);
 Route::get('/api/tasks', [TaskController::class, 'index']);
 Route::get('/api/task/{id}', [TaskController::class, 'show']);
 Route::put('/api/task/{id}', [TaskController::class, 'update']);
 Route::post('/api/task', [TaskController::class, 'store']);
 Route::delete('/api/task/{id}', [TaskController::class, 'destroy']);
-Route::get('/api/task/sort/{column}/order/{orderby}', [TaskController::class, 'sortBy']);
+//Route::get('/api/task/sort/{column}/order/{orderby}', [TaskController::class, 'sortBy']);
 Route::get('/api/tasks/expand={child}', [TaskController::class, 'expand']);
-Route::get('/api/task/search/{column}/{expression}/{value}', [TaskController::class, 'search']);
+//Route::get('/api/task/search/{column}/{expression}/{value}', [TaskController::class, 'search']);
+
 
 //User routes
 // Route::get('/user', function () {
@@ -43,6 +46,10 @@ Route::delete('/api/user/{id}', [UserController::class, 'destroy']);
 //Login
 // Route::get('/login.php', function () {
 //     return view('login');
+// });
+
+// Route::middleware(['throttle:login'])->group(function () {
+//     Route::get('/login', [AuthController::class, 'index'])->name('login');
 // });
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');

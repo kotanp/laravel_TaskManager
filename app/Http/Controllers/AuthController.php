@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Signin;
 use Session;
 use Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Exception;
 
 use Illuminate\Http\Request;
 
@@ -28,23 +31,44 @@ class AuthController extends Controller
         //     'azon' => 'required',
         //     'password' => 'required',
         // ]);
+        $this->checkTooManyFailedAttempts();
+
         $credentials = $request->only('azon', 'password');
+        
+        if(Auth::attempt($credentials))
+        {          
+            return redirect('/');
+            RateLimiter::clear($this->throttleKey());
+        }
+        else{
+            RateLimiter::hit($this->throttleKey(), $seconds = 60);
+        }
+        return redirect('/login');
+
+        
         // $user = Signin::where([
         //     'azon' => $request->azon, 
         //     'password' => $request->password
         // ])->first();
-        
-        if(Auth::attempt($credentials))
-        {
-            //Auth::login($user);;
-            //return response(['url' => url('/index.php')]);
-            return redirect('/');
-        }
-        return redirect('/login');
-
+        //Auth::login($user);
         //input type=button + ajax-os kéréshez kell
+        //return response(['url' => url('/index.php')]);
         //return response(['url' => url('/login')]);
         
+    }
+
+    public function throttleKey()
+    {
+        return Str::lower(request('azon')) . '|' . request()->ip();
+    }
+
+    public function checkTooManyFailedAttempts()
+    {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
+            return;
+        }
+
+        throw new Exception('Too many login attempts!');
     }
 
     public function changePassword(Request $request)

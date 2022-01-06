@@ -98,23 +98,47 @@ class TaskController extends Controller
         $task->delete();
     }
 
-    public function sortBy($column, $order)
+    // public function sortBy($column, $order)
+    // {
+    //     //$task=Task::with('user')->get()->sortBy($column)->values()->all();
+    //     $task=Task::with('user')->orderBy($column, $order)->get();
+    //     return response()->json($task);
+    // }
+
+    public function sortBy(Request $request)
     {
-        //$task=Task::with('user')->get()->sortBy($column)->values()->all();
-        $task=Task::with('user')->orderBy($column, $order)->get();
+        $column = $request->_sort;
+        if ($request->has('_order')){
+            $order=$request->_order;
+            $task=Task::with('user')->orderBy($column, $order)->get();
+        }
+        else{
+            $task=Task::with('user')->orderBy($column, 'asc')->get();
+        }
         return response()->json($task);
     }
 
     public function expand()
     {
         $tasks=Task::with('user')->get();
-        //$task=Task::all()->user;
         return $tasks;
     }
 
-    public function search($column, $expression, $value)
+    // public function search($column, $expression, $value)
+    // {
+    //     $tasks=Task::with('user')->where($column, $expression, $value)->get();
+    //     return $tasks;
+    // }
+    public function search(Request $request)
     {
-        $tasks=Task::with('user')->where($column, $expression, $value)->get();
+        $queryString = $request->query();
+        foreach ($queryString as $key => $value) {
+            $explodedKey=explode('_',$key);
+            $column=$explodedKey[0];
+            $expression=$explodedKey[1];
+            $tasks=Task::with('user')->where($column, $expression, '%' . $value . '%')->get();
+        }
         return $tasks;
     }
+
 }

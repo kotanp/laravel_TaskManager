@@ -5,10 +5,10 @@ $(function() {
     let taskapiVegpont="http://localhost:8000/api/task";
     let userapivegpont="http://localhost:8000/api/users";
     let tasksanduserapi="http://localhost:8000/api/tasks/expand=user";
-    let datumszerintNovekvo="/sort/end_date/order/asc";
-    let datumszerintCsokken="/sort/end_date/order/desc";   
-    let nevKereses="/search/title/like/";
-    let leirasKereses="/search/description/like/";     
+    let datumszerintNovekvo="/sort?_sort=end_date&_order=asc";
+    let datumszerintCsokken="/sort?_sort=end_date&_order=desc";   
+    let nevKereses="/search?title_like=";
+    let leirasKereses="/search?description_like=";     
     const taskTomb=[];
     const userTomb=[];
     ajax.getAjax(tasksanduserapi, taskTomb, taskLista);
@@ -94,12 +94,12 @@ $(function() {
 
     $("#nkereses").on("keyup",function(){
             let ertek=$(this).val();
-            ajax.getAjax(taskapiVegpont+nevKereses+"%"+ertek+"%",taskTomb, taskLista);
+            ajax.getAjax(taskapiVegpont+nevKereses+ertek,taskTomb, taskLista);
     });
     
     $("#lkereses").on("keyup",function(){
         let ertek=$(this).val();
-        ajax.getAjax(taskapiVegpont+leirasKereses+"%"+ertek+"%",taskTomb, taskLista);
+        ajax.getAjax(taskapiVegpont+leirasKereses+ertek,taskTomb, taskLista);
     });
 
     $("#rendezes").on("change",function(){
