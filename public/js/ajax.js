@@ -5,6 +5,7 @@ class Ajax{
         tomb.splice(0,tomb.length);
         $.ajax({url: apivegpont, type: "GET",success: function(result){
             result.forEach(element => {
+                console.log(element);
                 tomb.push(element);
             });
             callback(tomb);
