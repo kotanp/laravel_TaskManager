@@ -18,10 +18,11 @@ class IsUgyvezeto
     public function handle(Request $request, Closure $next)
     {
         //login-ra redirect-el ha felhasznalo a munkakore egyebkent tovabb enged
-        if (Auth::user()->user->munkakor=='felhasznalo'){
-            return redirect()->back();
+        if (Auth::user()->user->munkakor=='ugyvezeto' || Auth::user()->user->munkakor=='admin'){
+            return $next($request);
             //return redirect('/login');
         }
-        return $next($request);
+        
+        return redirect()->back();
     }
 }

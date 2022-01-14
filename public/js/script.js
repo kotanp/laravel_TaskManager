@@ -28,6 +28,7 @@ $(function() {
 
         $(window).on("torol",(event)=>{            
             ajax.deleteAjax(taskapiVegpont, event.detail.id);
+            location.reload();
         });
 
         $(window).on("modosit",(event)=>{
@@ -74,6 +75,7 @@ $(function() {
             "status":statusz
         };
         ajax.postAjax(taskapiVegpont, ujAdat);
+        location.reload();
     });
 
     $("#msubmit").on("click",()=>{
@@ -90,11 +92,12 @@ $(function() {
             "status":statusz
         };
         ajax.putAjax(taskapiVegpont, id, ujAdat);
+        location.reload();
     });
 
     $("#nkereses").on("keyup",function(){
             let ertek=$(this).val();
-            ajax.getAjax(taskapiVegpont+nevKereses+ertek,taskTomb, taskLista);
+            ajax.getAjaxSearch(taskapiVegpont+nevKereses+ertek,taskTomb, taskLista);
     });
     
     $("#lkereses").on("keyup",function(){

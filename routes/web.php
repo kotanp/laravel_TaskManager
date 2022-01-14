@@ -62,7 +62,7 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     });
 });
 
-Route::middleware(['auth', IsUgyvezeto::class])->group(function () {
+Route::middleware('auth', 'ugyvezeto')->group(function () {
     Route::get('/user', function () {
         return view('user');
     });
