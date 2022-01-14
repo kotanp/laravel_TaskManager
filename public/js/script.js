@@ -97,7 +97,7 @@ $(function() {
 
     $("#nkereses").on("keyup",function(){
             let ertek=$(this).val();
-            ajax.getAjaxSearch(taskapiVegpont+nevKereses+ertek,taskTomb, taskLista);
+            ajax.getAjax(taskapiVegpont+nevKereses+ertek,taskTomb, taskLista);
     });
     
     $("#lkereses").on("keyup",function(){
