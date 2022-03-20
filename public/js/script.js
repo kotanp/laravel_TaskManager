@@ -28,7 +28,7 @@ $(function() {
 
         $(window).on("torol",(event)=>{            
             ajax.deleteAjax(taskapiVegpont, event.detail.id);
-            location.reload();
+            //location.reload();
         });
 
         $(window).on("modosit",(event)=>{

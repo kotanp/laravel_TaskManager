@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FeladatokController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUgyvezeto;
+use App\Http\Controllers\UserTasksController;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +56,8 @@ Route::delete('/api/user/{id}', [UserController::class, 'destroy']);
 //     Route::get('/login', [AuthController::class, 'index'])->name('login');
 // });
 
-Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::post('/signin', [AuthController::class, 'authenticate'])->name('signin.custom');
+// Route::get('/login', [AuthController::class, 'index'])->name('login');
+// Route::post('/signin', [AuthController::class, 'authenticate'])->name('signin.custom');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', IsAdmin::class])->group(function () {
@@ -76,3 +80,22 @@ Route::get('/changepwd',function(){
 });
 
 Route::post('/change', [AuthController::class, 'changePassword'])->name('password.change');
+
+#####
+
+Route::get('/api/usertasks', [UserTasksController::class, 'utasks']);
+Route::get('/api/feladatok', [FeladatokController::class, 'feladatok']);
+
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/signin', [AuthController::class, 'authenticate'])->name('signin.custom');
+// Route::middleware(['throttle:login'])->group(function () {
+//     Route::post('/signin', [AuthController::class, 'authenticate'])->name('signin.custom');
+// });
+
+Route::middleware('auth', 'ugyvezeto')->group(function () {
+    Route::get('/user', function () {
+        return view('user');
+    });
+});
+
+Route::get('/api/error', [AuthController::class, 'error'])->name('password.error');

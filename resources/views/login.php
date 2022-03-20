@@ -12,6 +12,7 @@
 </head>
 <body>
 <form id="form" method="POST" action=<?php $route=route('signin.custom'); echo $route?>>
+<?php if(session('errors')!==null) { $error=session('errors')->first('loginlimit'); if ($error!==''){echo $error; echo "<br>";}} ?>
                     <fieldset>
                     <legend>Bejelentkezés:</legend>
                     <input type="hidden" name="_token" value=<?php $token=csrf_token(); echo $token;?>>

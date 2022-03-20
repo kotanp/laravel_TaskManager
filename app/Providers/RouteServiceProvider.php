@@ -61,7 +61,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(3)->by($request->input('password'));
+            return Limit::perMinute(3)->by($request->input('azon'));
         });
     }
 }

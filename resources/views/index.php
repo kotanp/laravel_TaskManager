@@ -8,7 +8,7 @@
     <script src="\js\ajax.js"></script>
     <script src="\js\task.js"></script>
     <script src="\js\script.js"></script>
-    <meta name="csrf-token" content=<?php $token=csrf_token(); echo $token;?>>
+    
     <title>Kotán Péter</title>
 </head>
 <body>
